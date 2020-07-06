@@ -11,7 +11,7 @@ class AccountAnalyticAccount(models.Model):
     compartido = fields.Boolean(
         string='Compartido')
 
-    listado = fields.fields.Selection(
+    listado = fields.Selection(
         selection=[('local','Local'),
                     ('foraneo','Foraneo'),
                 ],
