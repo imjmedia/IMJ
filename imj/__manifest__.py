@@ -9,7 +9,7 @@
             Init""",
     'category': 'Base',
     'website': 'https://www.odoo.com/',
-    'depends' : ['base'],
+    'depends' : ['account'],
     'data': ['views/account_view.xml'],
     'demo': [],
     'qweb': [],
