@@ -5,7 +5,7 @@
     <record id="account_imj_inherit" model="ir.ui.view">
         <field name="name">account.imj.inherit</field>
         <field name="model">account.analytic.account</field>
-        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="inherit_id" ref="account_budget.view_account_analytic_account_form_inherit_budget"/>
         <field name="arch" type="xml">
             <xpath expr="//page[last()]" position="after">
                 <page name="IMJ" string="IMJ">
