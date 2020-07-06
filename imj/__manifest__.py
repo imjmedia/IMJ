@@ -10,7 +10,7 @@
     'category': 'Base',
     'website': 'https://www.odoo.com/',
     'depends' : ['base'],
-    'data': [],
+    'data': ['views/account_views.xml'],
     'demo': [],
     'qweb': [],
     'installable': True,
