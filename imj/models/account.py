@@ -19,3 +19,16 @@ class AccountAnalyticAccount(models.Model):
     )
 
 
+class CrossoveredBudgetLines(models.Model):
+    _inherit = "crossovered.budget.lines"
+
+    percentage = fields.Float(
+        compute='_compute_percentage', string='Achievement',
+        help="Comparison between practical and theoretical amount. This measure tells you if you are below or over budget.")
+    
+    def _compute_percentage(self):
+        for line in self:
+            if line.practical_amount != 0.00:
+                line.percentage = float((line.planned_amount or 0.0) / line.practical_amount)
+            else:
+                line.percentage = 0.00
