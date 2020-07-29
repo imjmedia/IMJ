@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+    <record id="account_imj_inherit" model="ir.ui.view">
+        <field name="name">account.imj.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="account_budget.view_account_analytic_account_form_inherit_budget"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page name="IMJ" string="IMJ">
+                    <group>
+                        <field name="compartido" />
+                        <field name="listado" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</data>
+
+</odoo>
