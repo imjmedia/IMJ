@@ -5,8 +5,17 @@ import odoo.addons.decimal_precision as dp
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    vat = fields.Char(string='Tax ID', required=True, help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+    vat = fields.Char(string='Tax ID', required=False, help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+    valid_rfc = fields.Boolean('Valida RFC', default=False)
 
-    _sql_constraints = [
-        ('vat_uniq', 'unique (vat)', 'El RFC debe ser Unico!')
-    ]
+    @api.constrains('vat','valid_rfc')
+    def _check_vat_unique(self):
+        if self.valid_rfc:
+            old_vat=self.search([('vat', '=', self.vat)])
+            if old_vat:
+                raise ValidationError('RFC debe ser Unico')
+        
+
+    # _sql_constraints = [
+    #     ('vat_uniq', 'unique (vat)', 'El RFC debe ser Unico!')
+    # ]
