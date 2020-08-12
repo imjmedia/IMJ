@@ -16,6 +16,10 @@
         	<xpath expr="//button[@name='button_confirm']" position="replace">
                 <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="imj.group_purchase_medio"/>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}" placeholder="Name, TIN, Email, or Reference" 
+                	domain="[('customer_rank', '=', 0)]"/>
+            </xpath>
             
         </field>
     </record>
