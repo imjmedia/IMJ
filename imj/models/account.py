@@ -32,8 +32,8 @@ class CrossoveredBudgetLines(models.Model):
 
     def _compute_percentage(self):
         for line in self:
-            if line.practical_amount != 0.00:
-                line.percentage = float((line.practical_amount or 0.0) / line.planned_amount)
+            if line.amount_purchase != 0.0:
+                line.percentage = float((line.amount_purchase or 0.0) / line.planned_amount)
             else:
                 line.percentage = 0.00
 
