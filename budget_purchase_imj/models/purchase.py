@@ -38,8 +38,7 @@ class PurchaseOrder(models.Model):
                                     line.write({'amount_purchase':line.amount_purchase + pline.price_subtotal})
             else:
                 raise UserError(('No hay presupuesto activo para la fecha:')) 
-        super(PurchaseOrder, self).button_confirm()
-            
+        super(PurchaseOrder, self).button_confirm() 
         return True
     
     def button_cancel(self):
