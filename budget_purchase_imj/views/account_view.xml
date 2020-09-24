@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='practical_amount']" position="before">
-              <field string='Importe Comprometido' name="amount_purchase" readonly="True" widget="monetary"/>
+              <field string='Comprometido' name="amount_purchase" readonly="True" widget="monetary"/>
             </xpath>
         </field>
     </record>
