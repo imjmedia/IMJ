@@ -19,16 +19,36 @@ class AccountAnalyticAccount(models.Model):
     )
 
 
+
+
+
 class CrossoveredBudgetLines(models.Model):
     _inherit = "crossovered.budget.lines"
 
     percentage = fields.Float(
         compute='_compute_percentage', string='Achievement',
         help="Comparison between practical and theoretical amount. This measure tells you if you are below or over budget.")
-    
+    account_id = fields.Many2one('account.account', compute='_compute_account', string="Cuenta", store=False)
+
     def _compute_percentage(self):
         for line in self:
-            if line.practical_amount != 0.00:
-                line.percentage = float((line.practical_amount or 0.0) / line.planned_amount)
+            if line.amount_purchase != 0.0:
+                line.percentage = float((line.amount_purchase or 0.0) / line.planned_amount)
             else:
                 line.percentage = 0.00
+
+    def _compute_account(self):
+        for line in self:
+            if line.general_budget_id:
+                if line.general_budget_id.account_ids:
+                    line.account_id=line.general_budget_id.account_ids[0].id
+                else:
+                    line.account_id=False
+            else:
+                line.account_id=False
+
+
+
+
+
+

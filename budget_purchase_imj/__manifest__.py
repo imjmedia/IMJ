@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name' : 'IMJ',
+    'name' : 'Budget Purchase IMJ',
     'version' : '1.1',
-    'summary': 'Init',
+    'summary': 'IMJ',
     'sequence': 1,
     'description': """
-            Init""",
-    'category': 'Base',
+            Module add validation of budget in purchase""",
+    'category': 'Account',
     'website': 'https://www.odoo.com/',
-    'depends' : ['account','account_budget','purchase','sale'],
+    'depends' : ['account','account_budget','purchase'],
     'data': ['views/account_view.xml',
-            'views/res_partner.xml',
-            'views/purchase_view.xml',
-            'views/sale_view.xml',
             ],
     'demo': [],
     'qweb': [],
