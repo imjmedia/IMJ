@@ -8,8 +8,19 @@
         <field name="model">crossovered.budget</field>
         <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='planned_amount']" position="before">
+              <field name="qty" />
+              <field name="price" />
+              <field name="duration" />
+            </xpath>
             <xpath expr="//field[@name='practical_amount']" position="before">
               <field string='Comprometido' name="amount_purchase" readonly="True" widget="monetary"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="before">
+              <field  name="start_date"/>
+              <field  name="end_date"/>
+            </xpath>
+            <xpath expr="//field[@name='theoritical_amount']" position="replace">
             </xpath>
         </field>
     </record>
