@@ -11,6 +11,7 @@
     'website': 'https://www.odoo.com/',
     'depends' : ['account','account_budget','purchase'],
     'data': ['views/account_view.xml',
+            'security/imj_security.xml'
             ],
     'demo': [],
     'qweb': [],
