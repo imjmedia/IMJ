@@ -12,8 +12,8 @@ class CrossoveredBudge(models.Model):
 
     start_date = fields.Date('Inicio')
     end_date = fields.Date('Fin')
-    margen_real = fields.Float('Margen Real', compute='_compute_margen')
-    margen_planeed = fields.Float('Margen Planeado', compute='_compute_margen')
+    margen_real = fields.Float(' % Margen Real', compute='_compute_margen')
+    margen_planeed = fields.Float('% Margen Planeado', compute='_compute_margen')
 
     def _compute_margen(self):
         for budget in self:
@@ -30,11 +30,11 @@ class CrossoveredBudge(models.Model):
                         compra_planed += line.planned_amount
                         compra_real += line.amount_purchase
             if venta_planed != 0:
-                budget.margen_planeed = (venta_planed - compra_planed) / venta_planed
+                budget.margen_planeed = ((venta_planed - compra_planed) / venta_planed ) * 100
             else:
                 budget.margen_planeed=0
             if venta_real != 0:
-                budget.margen_real = (venta_real - compra_real) / venta_real
+                budget.margen_real = ((venta_real - compra_real) / venta_real) * 100
             else:
                 budget.margen_real = 0
 
