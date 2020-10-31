@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data >
+
+    <record id="purchase_order_personal_rule" model="ir.rule">
+        <field name="name">Personal Orders IMJ</field>
+        <field ref="model_purchase_order" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)] </field>
+    </record>
+   
+</data>
+</odoo>
