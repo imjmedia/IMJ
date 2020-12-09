@@ -72,8 +72,8 @@ class CrossoveredBudgetLines(models.Model):
     @api.onchange('qty','price','duration')
     def _onchange_planned(self):
         for line in self:
-            if line.qty and line.price and line.duration:
-                line.planned_amount = line.qty * line.price * line.duration
+            if line.qty and line.price:
+                line.planned_amount = line.qty * line.price
             else:
                 line.planned_amount = 0
 
