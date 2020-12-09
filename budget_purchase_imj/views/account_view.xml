@@ -14,13 +14,19 @@
               <field name="duration" />
             </xpath>
             <xpath expr="//field[@name='practical_amount']" position="before">
-              <field string='Comprometido' name="amount_purchase" readonly="True" widget="monetary"/>
+              <field string='Comprometido' name="amount_purchase" readonly="True" widget="monetary" sum="amount_purchase"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="before">
-              <field  name="start_date"/>
-              <field  name="end_date"/>
+              <field  name="start_date" string='Inicio de Campaña'/>
+              <field  name="end_date" string='Fin de Campaña'/>
             </xpath>
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
+            </xpath>            
+            <xpath expr="//field[@name='user_id']" position="after">
+
+                    <field  name="margen_planeed" /> 
+                    <field  name="margen_real"/> 
+
             </xpath>
         </field>
     </record>

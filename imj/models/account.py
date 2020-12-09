@@ -4,6 +4,20 @@ from odoo import api, fields, models
 import odoo.addons.decimal_precision as dp
 
 
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    # Columns Section
+    compartido = fields.Boolean(
+        string='Compartido')
+
+    listado = fields.Selection(
+        selection=[('local','Local'),
+                    ('foraneo','Foraneo'),
+                ],
+        string="Listado",
+    )
+
 class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
