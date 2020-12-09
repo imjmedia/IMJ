@@ -10,8 +10,15 @@
             <xpath expr="//page[last()]" position="after">
                 <page name="IMJ" string="IMJ">
                     <group>
-                        <field name="compartido" />
-                        <field name="listado" />
+                        <group>
+                            <field name="compartido" />
+                            <field name="listado" />
+                        </group>
+                        <group>
+                            <field name="country_id" />
+                            <field name="state_id" />
+                            <field name="city_id" />
+                        </group>
                     </group>
                 </page>
             </xpath>

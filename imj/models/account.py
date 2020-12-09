@@ -17,6 +17,9 @@ class ProductTemplate(models.Model):
                 ],
         string="Listado",
     )
+    state_id = fields.Many2one("res.country.state", string='Estado', ondelete='restrict', domain="[('country_id', '=?', country_id)]")
+    country_id = fields.Many2one('res.country', string='Pais', ondelete='restrict')
+    city_id = fields.Many2one('res.city', string='Ciudad',domain="[('state_id', '=?', state_id)]")
 
 class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
