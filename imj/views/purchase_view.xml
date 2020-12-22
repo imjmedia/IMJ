@@ -29,7 +29,7 @@
             
         </field>
     </record>
-
+<!--
     <record id="purchase_cost_imj_inherit" model="ir.ui.view">
         <field name="name">purchase.cost.imj.inherit</field>
         <field name="model">purchase.order</field>
@@ -56,7 +56,7 @@
             </xpath>
         </field>
     </record>
-
+-->
 </data>
 
 </odoo>    

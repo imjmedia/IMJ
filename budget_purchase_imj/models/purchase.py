@@ -5,7 +5,31 @@ import odoo.addons.decimal_precision as dp
 from odoo.exceptions import AccessError, UserError, ValidationError
 
 
+class ProductCategory(models.Model):
+    _inherit = "product.category"
 
+    cost_edit = fields.Boolean('Modificar Costo', copy=False)
+
+
+    def write(self, values):
+        res = super(ProductCategory, self).write(values)
+        if 'cost_edit' in values:
+            templates=self.env['product.template']
+            ids_tmp=templates.search([('categ_id','=',self.id)])
+            ids_tmp.write({'cost_edit':values.get('cost_edit')})
+
+        return res
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    cost_edit = fields.Boolean('Modificar Costo', copy=False)
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    cost_edit = fields.Boolean(relation='product_id.cost_edit', string='Modificar Costo', copy=False)
 
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
