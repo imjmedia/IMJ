@@ -3,6 +3,8 @@
 from odoo import api, fields, models
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import AccessError, UserError, ValidationError
+from datetime import datetime
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class ProductCategory(models.Model):
