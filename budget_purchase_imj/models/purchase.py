@@ -31,6 +31,21 @@ class PurchaseOrderLine(models.Model):
 
     cost_edit = fields.Boolean(relation='product_id.cost_edit', string='Modificar Costo', copy=False)
 
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        if not self.product_id:
+            return
+
+        # Reset date, price and quantity since _onchange_quantity will provide default values
+        self.date_planned = datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        self.price_unit = self.product_qty = 0.0
+        self.cost_edit=self.product_id.cost_edit
+        self._product_id_change()
+
+        self._suggest_quantity()
+        self._onchange_quantity()
+
+
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
