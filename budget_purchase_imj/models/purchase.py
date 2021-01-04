@@ -3,8 +3,49 @@
 from odoo import api, fields, models
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import AccessError, UserError, ValidationError
+from datetime import datetime
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
+class ProductCategory(models.Model):
+    _inherit = "product.category"
+
+    cost_edit = fields.Boolean('Modificar Costo', copy=False)
+
+
+    def write(self, values):
+        res = super(ProductCategory, self).write(values)
+        if 'cost_edit' in values:
+            templates=self.env['product.template']
+            ids_tmp=templates.search([('categ_id','=',self.id)])
+            ids_tmp.write({'cost_edit':values.get('cost_edit')})
+
+        return res
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    cost_edit = fields.Boolean('Modificar Costo', copy=False)
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    cost_edit = fields.Boolean(relation='product_id.cost_edit', string='Modificar Costo', copy=False)
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        if not self.product_id:
+            return
+
+        # Reset date, price and quantity since _onchange_quantity will provide default values
+        self.date_planned = datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        self.price_unit = self.product_qty = 0.0
+        self.cost_edit=self.product_id.cost_edit
+        self._product_id_change()
+
+        self._suggest_quantity()
+        self._onchange_quantity()
 
 
 class PurchaseOrder(models.Model):

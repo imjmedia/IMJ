@@ -29,6 +29,21 @@
             
         </field>
     </record>
+<!--
+    <record id="purchase_cost_imj_inherit" model="ir.ui.view">
+        <field name="name">purchase.cost.imj.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('purchase.group_purchase_user')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_unit']" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='price_unit']" position="attributes">
+                <attribute name="force_save">True</attribute>
+            </xpath>
+        </field>
+    </record>
 
     <record id="purchase_cost_imj_inherit" model="ir.ui.view">
         <field name="name">purchase.cost.imj.inherit</field>
@@ -45,6 +60,7 @@
         </field>
     </record>
 
+
     <record id="purchase_cost_admin_imj_inherit" model="ir.ui.view">
         <field name="name">purchase.cost.admin.imj.inherit</field>
         <field name="model">purchase.order</field>
@@ -56,6 +72,8 @@
             </xpath>
         </field>
     </record>
+
+-->
 
 </data>
 
