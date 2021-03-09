@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+    
+
+    <record id="purchase_imj_approval_inherit" model="ir.ui.view">
+        <field name="name">purchase.imj.approval.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='date_order']" position="after">
+                <field name="approval" groups="budget_purchase_imj.group_purchase_approval"/>
+            </xpath>
+            
+            
+        </field>
+    </record>    
+    <record id="purchase_imj_approval_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.imj.approval.tree.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="approval" groups="budget_purchase_imj.group_purchase_approval"/>
+            </xpath>
+            
+            
+        </field>
+    </record>
+
+
+    <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+        <field name="domain">[('state','in',('purchase', 'done')),('approval','=', True)]</field>
+    </record>
+
+</data>
+
+</odoo>    
+
+

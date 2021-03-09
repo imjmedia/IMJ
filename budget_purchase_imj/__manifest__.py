@@ -10,8 +10,10 @@
     'category': 'Account',
     'website': 'https://www.odoo.com/',
     'depends' : ['account','account_budget','purchase'],
-    'data': ['views/account_view.xml',
-            'security/imj_security.xml'
+    'data': ['security/imj_security.xml',
+        'views/account_view.xml',
+        'views/purchase_view.xml',
+            
             ],
     'demo': [],
     'qweb': [],

@@ -51,6 +51,8 @@ class PurchaseOrderLine(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
+    approval = fields.Boolean('Visto bueno', copy=False)
+
     def button_confirm(self):
         budget = self.env['crossovered.budget']
         for order in self:
