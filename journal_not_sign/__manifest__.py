@@ -14,9 +14,8 @@
         "l10n_mx_edi",
     ],
     "data": [
-        # "data/attachment_doc_types_data.xml",
         "views/account_journal_view.xml",
-        # "views/attachment_doc_files_view.xml",
+        "views/account_move_view.xml",
         # 'security/ir.model.access.csv',
         
     ],

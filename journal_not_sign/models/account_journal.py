@@ -7,4 +7,4 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
 
-    not_invoice_sign = fields.Boolean(_("Journal Not Sign"))
+    not_invoice_sign = fields.Boolean(string="Sin Timbrar")
