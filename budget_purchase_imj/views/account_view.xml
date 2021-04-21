@@ -62,6 +62,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='parent_id']" position="after">
               <field  name="cost_edit"/> 
+              <field  name="limit_purchase" groups="budget_purchase_imj.group_purchase_approval"/> 
+              <field  name="users_aprov_ids"/> 
+              <field  name="users_limit_ids"/> 
             </xpath>
         </field>
     </record>

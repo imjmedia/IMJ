@@ -11,6 +11,9 @@ class ProductCategory(models.Model):
     _inherit = "product.category"
 
     cost_edit = fields.Boolean('Modificar Costo', copy=False)
+    limit_purchase = fields.Float('Limite Compras', copy=False)
+    users_aprov_ids= fields.Many2many('res.users', 'categ_res_aut_rel', 'category_id', 'user_id', string='Usuarios Autoriza')
+    users_limit_ids= fields.Many2many('res.users', 'categ_res_rel', 'cat_id', 'uid', string='Usuarios Admin')
 
 
     def write(self, values):
@@ -52,6 +55,23 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     approval = fields.Boolean('Visto bueno', copy=False)
+    
+    @api.onchange('approval')
+    def onchange_approval(self):
+        for order in self:
+            categ=False
+            print (self._uid,"user")
+            for line in order.order_line:
+                if categ and line.product_id.categ_id.id != categ.id:
+                    raise UserError(('Diferentes categorias de productos en las lineas'))
+                else:
+                    categ=line.product_id.categ_id
+            
+            if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
+                raise UserError(('Usuario sin perimosos para dar el visto bueno'))
+            if categ and self.amount_total > categ.limit_purchase and self._uid not in categ.users_limit_ids.ids:
+                raise UserError(('Usuario sin perimosos para dar el visto bueno con monto superior ($ %.0f) de la categoria'%categ.limit_purchase))
+
 
     def button_confirm(self):
         budget = self.env['crossovered.budget']
