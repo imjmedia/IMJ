@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wiz_cam_form">
+            <field name="name">wiz.cam</field>
+            <field name="model">wiz.cam</field>
+            <field name="arch" type="xml">
+                <form string="Generar OC">
+                    <separator string="Crear OC desde una campaña:"/>
+                    <group>
+                        <field name="name" class="oe_inline"/>
+                        <field name="num" class="oe_inline"/>
+                    </group>
+
+                    <footer>
+                        <button name="run" string="Crear" type="object" class="btn-primary"/>
+                        <button class="btn-secondary" special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            name="Duplicar OC"
+            res_model="wiz.cam"
+            view_mode="form"
+            target="new"
+            id="action_wiz_cam" />
+
+        <menuitem action="action_wiz_cam" id="menu_wiz_cam" parent="purchase.menu_procurement_management" sequence="135"/>
+
+    </data>
+</odoo>

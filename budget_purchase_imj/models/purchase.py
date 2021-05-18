@@ -55,12 +55,30 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     approval = fields.Boolean('Visto bueno', copy=False)
+    release = fields.Boolean('Liberada', compute='_compute_release',store=False)
+    release_date = fields.Date('Fecha Liberacion', copy=False)
+    gpo = fields.Integer('Grupo', copy=False)
     
+    @api.depends('release_date')
+    def _compute_release(self):
+        for order in self:
+            order.release=True
+            # users= self.env.ref("budget_purchase_imj.group_purchase_release" ).users
+            # if self._uid in users.ids:
+            #     order.release=True
+            # else:
+            #     order.release=False
+
+
+
     @api.onchange('approval')
     def onchange_approval(self):
         for order in self:
             categ=False
-            print (self._uid,"user")
+            if not order.release_date:
+                raise UserError(('No tienes fecha de liberación, no puedes dar el VoBo'))
+            if order.release_date > fields.Date.today():
+                raise UserError(('La fecha de liberación, debe ser menor o igual a hoy'))
             for line in order.order_line:
                 if categ and line.product_id.categ_id.id != categ.id:
                     raise UserError(('Diferentes categorias de productos en las lineas'))

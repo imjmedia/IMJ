@@ -13,6 +13,7 @@
     'data': ['security/imj_security.xml',
         'views/account_view.xml',
         'views/purchase_view.xml',
+        'wizard/wiz_cam.xml',
             
             ],
     'demo': [],
