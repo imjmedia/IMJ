@@ -83,6 +83,22 @@ class PurchaseOrder(models.Model):
                 
 
 
+    def write(self, values):
+        res = super(PurchaseOrder, self).write(values)
+        if 'approval' in values:
+            if values['approval']:
+                self.message_post(
+                    body=('Visto Bueno aceptado'))
+            else:
+                self.message_post(
+                    body=('Se elimino el Visto Bueno'))
+
+
+        return res
+
+                
+
+
     @api.onchange('approval')
     def onchange_approval(self):
         for order in self:
