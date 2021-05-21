@@ -71,6 +71,22 @@ class PurchaseOrder(models.Model):
 
 
 
+    def write(self, values):
+        res = super(PurchaseOrder, self).write(values)
+        if 'approval' in values:
+            if values['approval']:
+                self.message_post(
+                    body=('Visto Bueno aceptado'))
+            else:
+                self.message_post(
+                    body=('Se elimino el Visto Bueno'))
+
+
+        return res
+
+                
+
+
     @api.onchange('approval')
     def onchange_approval(self):
         for order in self:
@@ -89,11 +105,13 @@ class PurchaseOrder(models.Model):
                 raise UserError(('Usuario sin perimosos para dar el visto bueno'))
             if categ and self.amount_total > categ.limit_purchase and self._uid not in categ.users_limit_ids.ids:
                 raise UserError(('Usuario sin perimosos para dar el visto bueno con monto superior ($ %.0f) de la categoria'%categ.limit_purchase))
-
+            
 
     def button_confirm(self):
         budget = self.env['crossovered.budget']
         for order in self:
+            if not order.approval:
+                raise UserError(('No puedes confirmar una OC sin el Visto Bueno:'))
             positivo=False
             id_budget=budget.search([('date_from', '<=', fields.Date.context_today(self)),('date_to', '>=', fields.Date.context_today(self)),('state','=','validate')])
             if id_budget:
