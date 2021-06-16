@@ -12,7 +12,7 @@ class ResPartner(models.Model):
     @api.constrains('vat','valid_rfc')
     def _check_vat_unique(self):
         if self.valid_rfc:
-            old_vat=self.search([('vat', '=', self.vat)])
+            old_vat=self.search([('vat', '=', self.vat),('id', '!=', self.id)])
             if old_vat:
                 raise ValidationError('RFC debe ser Unico')
         

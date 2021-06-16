@@ -55,7 +55,7 @@ class WizCam(models.TransientModel):
                 # rel_date = fields.Date.from_string(wiz.release_date)
                 new_date=rel_date + relativedelta(months=i+1)
                 date_release=fields.Date.to_string(new_date)
-                news.append(wiz.name.copy({'release_date':date_release}).id)
+                news.append(wiz.name.copy({'release_date':date_release, 'date_order':date_release}).id)
             
             tree_view_id = self.env.ref('purchase.purchase_order_tree').id
             form_view_id = self.env.ref('purchase.purchase_order_form').id
