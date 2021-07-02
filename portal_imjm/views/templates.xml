@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_imjm_template_partner" inherit_id="portal.portal_my_details">
+        <xpath expr="//div[hasclass('o_portal_details')]" position="after">
+            <div class="row">
+                <div t-attf-class="form-group #{error.get('valid_until') and 'o_has_error' or ''} col-xl-6">
+                    <label class="col-form-label" for="name">Opinion Sat válida al</label>
+                    <input type="text" readonly="1" name="valid_until" t-attf-class="form-control #{error.get('valid_until') and 'is-invalid' or ''}" t-att-value="valid_until or partner.valid_until" />
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//input[@name='name']" position="replace">
+            <input type="text" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//input[@name='company_name']" position="replace">
+            <input t-else="" type="text" name="company_name" t-attf-class="form-control #{error.get('company_name') and 'is-invalid' or ''}" t-att-value="company_name or partner.commercial_company_name" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//input[@name='vat']" position="replace">
+            <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="vat or partner.vat" t-att-readonly="1" t-att-title="vat_not_editable_message"/>
+        </xpath>
+        <xpath expr="//input[@name='street']" position="replace">
+            <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//input[@name='city']" position="replace">
+            <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="city or partner.city" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//input[@name='zipcode']" position="replace">
+            <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//select[@name='country_id']" position="replace">
+            <input type="text" name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}" t-att-value="country_id or partner.country_id.name" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="//select[@name='state_id']" position="replace">
+            <input type="text" name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}" t-att-value="state_id or partner.state_id.name" t-att-readonly="1"/>
+        </xpath>
+        <xpath expr="/t/t/form" position="after">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="/upload/opinion/" method="post" enctype="multipart/form-data" id="file_upload_form">
+                        <input type="hidden" name="partner" t-att-value="partner.id"/>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Subir PDF de opinion del SAT</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="file" name="attachment" class="file" multiple="false"
+                                   data-show-upload="true" data-show-caption="true" data-show-preview="true"
+                                   id="opinion"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary  ">
+                                Confirm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
