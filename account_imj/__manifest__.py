@@ -13,7 +13,7 @@
     'website': 'https://www.odoo.com/',
     'depends' : ['account','purchase'],
     'data': ['views/account_view.xml',
-            #'views/purchase_view.xml',
+            'views/purchase_order_view.xml',
             ],
     'demo': [],
     'qweb': [],
