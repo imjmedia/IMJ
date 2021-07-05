@@ -25,6 +25,6 @@ class CustomerPortal(CustomerPortal):
             attachment = file.read()
             mimetype = guess_mimetype(base64.b64decode(base64.encodebytes(attachment)))
             if mimetype in File_Type:
-                partner_id.write({'opinion_sat': base64.encodebytes(attachment), 'valid_until': fields.Date.today() + relativedelta(days=90)})
+                partner_id.sudo(True).write({'opinion_sat': base64.encodebytes(attachment), 'valid_until': fields.Date.today() + relativedelta(days=90)})
 
         return request.redirect('/my/account')
