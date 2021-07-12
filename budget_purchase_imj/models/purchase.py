@@ -80,8 +80,10 @@ class PurchaseOrder(models.Model):
             else:
                 self.message_post(
                     body=('Se elimino el Visto Bueno'))
-
-
+        if self.approval == True and self.state == 'purchase':
+            categ = self.order_line[0].product_id.categ_id
+            if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
+                raise UserError(('No tienes permiso para modificar una orden que ya tiene visto bueno'))
         return res
 
                 
@@ -138,7 +140,7 @@ class PurchaseOrder(models.Model):
                                     else:
                                         line.write({'amount_purchase':line.amount_purchase + pline.price_subtotal})
             else:
-                raise UserError(('No hay presupuesto activo para la fecha:')) 
+                raise UserError(('No hay presupuesto activo para la fecha:'))
         super(PurchaseOrder, self).button_confirm() 
         return True
     
