@@ -148,6 +148,10 @@ class PurchaseOrder(models.Model):
         budget = self.env['crossovered.budget']
         for order in self:
             if order.state=='purchase':
+                if order.approval == True:
+                    categ = order.order_line[0].product_id.categ_id
+                    if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
+                        raise UserError(('No tienes permiso para cancelar una orden que ya tiene visto bueno'))
                 id_budget=budget.search([('date_from', '<=', fields.Date.context_today(self)),('date_to', '>=', fields.Date.context_today(self)),('state','=','validate')])
                 if id_budget:
                     for pline in order.order_line:
@@ -158,6 +162,3 @@ class PurchaseOrder(models.Model):
                                     if (line.analytic_account_id.id==pline.account_analytic_id.id) and (line.account_id.id==prod_account_id.id):
                                         line.write({'amount_purchase':line.amount_purchase - pline.price_subtotal})
         super(PurchaseOrder, self).button_cancel()
-
-
-
