@@ -84,7 +84,7 @@ class PurchaseOrder(models.Model):
             if 'state' not in values:
                 categ = self.order_line[0].product_id.categ_id
                 if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
-                    raise UserError(('No tienes permiso para modificar una orden que ya tiene visto bueno. Values: %s -'%str(values)))
+                    raise UserError(('No tienes permiso para modificar una orden que ya tiene visto bueno. Modificación: %s -'%str(values)))
         return res
 
                 

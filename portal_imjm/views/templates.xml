@@ -4,7 +4,9 @@
         <xpath expr="//div[hasclass('o_portal_details')]" position="after">
             <div class="row">
                 <div t-attf-class="form-group #{error.get('valid_until') and 'o_has_error' or ''} col-xl-6">
-                    <label class="col-form-label" for="name">Opinion Sat válida al</label>
+                    <label class="col-form-label" for="name">Estado de la validez y fecha de renovación de la Opinión del SAT</label>
+                    <input type="text" readonly="1" name="estado_opinion" t-attf-class="form-control #{error.get('estado_opinion') and 'is-invalid' or ''}" t-att-value="estado_opinion or partner.estado_opinion"/>
+                    <input type="text" readonly="1" name="opinion_msg_stat" t-attf-class="form-control #{error.get('opinion_msg_stat') and 'is-invalid' or ''}" t-att-value="opinion_msg_stat or partner.opinion_msg_stat"/>
                     <input type="text" readonly="1" name="valid_until" t-attf-class="form-control #{error.get('valid_until') and 'is-invalid' or ''}" t-att-value="valid_until or partner.valid_until" />
                 </div>
             </div>
@@ -49,7 +51,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary  ">
-                                Confirm
+                                Subir
                             </button>
                         </div>
                     </form>
