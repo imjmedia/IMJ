@@ -10,7 +10,9 @@
     'version': '14.0',
     'depends': ['purchase','portal'],
     'data': [
+        'edi/checar_opinion_sat_action_data.xml',
         'views/templates.xml',
         'views/res_partner_view.xml',
+        'views/checar_opinion_sat_cron.xml',
     ],
 }
