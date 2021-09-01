@@ -81,12 +81,13 @@ class PurchaseOrder(models.Model):
                 self.message_post(
                     body=('Se elimino el Visto Bueno'))
         if self.approval == True:# and self.state == 'purchase':
-            if 'state' not in values:
-                if 'message_main_attachment_id' not in values:
-                    categ = self.order_line[0].product_id.categ_id
-                    if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
-                        raise UserError(('No tienes permiso para modificar una orden que ya tiene visto bueno. Modificación: %s -'%str(values)))
-        return res
+            campos_permitidos = ['state', 'message_main_attachment_id', 'access_token']
+            for campo in campos_permitidos:
+                if campo in values:
+                    return res
+            categ = self.order_line[0].product_id.categ_id
+            if categ and self._uid not in categ.users_aprov_ids.ids and self._uid not in categ.users_limit_ids.ids:
+                raise UserError(('No tienes permiso para modificar una orden que ya tiene visto bueno. Modificación: %s -'%str(values)))
 
                 
 
