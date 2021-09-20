@@ -35,7 +35,7 @@
                 <field name="name"/>
                 <field name="fecha_sincro"/>
                 <field name="lista_negra_csv"/>
-                <field name="state" widget="badge" decoration-success="state == 'activo'" decoration-muted="state == 'inactivo'"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
