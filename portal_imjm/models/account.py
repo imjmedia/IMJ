@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -19,5 +22,6 @@ class AccountMove(models.Model):
             'type': 'in_invoice',
         })
         factura.purchase_order_change()
-        print(factura)
+        _logger.info(factura)
+        _logger.info('factura data.-.-.-.-.-.-')
         return factura
