@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api,_
 from dateutil.relativedelta import relativedelta
-from datetime import datetime
 from odoo import SUPERUSER_ID
 
 class ResPartner(models.Model):
@@ -51,7 +50,7 @@ class ResPartner(models.Model):
                         mail_mail_obj = self.env['mail.mail']
                         if msg_id:
                             mail_mail_obj.sudo().send(msg_id)
-                if faltan == 0:
+                if faltan < 1:
                     partner.estado_opinion = 'invalida'
                     partner.opinion_msg_stat = 'Expirada: han pasado 90 días desde la última renovación.'
         return True

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Modificacion vista partner-->
     <template id="portal_imjm_template_partner" inherit_id="portal.portal_my_details">
         <xpath expr="//div[hasclass('o_portal_details')]" position="after">
             <div class="row">
@@ -57,6 +58,66 @@
                     </form>
                 </div>
             </div>
+        </xpath>
+    </template>
+    <!-- Modificacion vista purchase order list-->
+    <template id="portal_imjm_template_purchase_order_list" inherit_id="purchase.portal_my_purchase_orders">
+        <xpath expr="//t/t/thead/tr/th[3]" position="after">
+            <th>Fecha de Liberación</th>
+        </xpath>
+        <xpath expr="//t/t/tbody/t/tr" position="replace">
+            <t t-if="order.release_date">
+                <tr t-if="order.release_date.month &lt;= order.release_date.today().month">
+                    <td>
+                        <a t-att-href="order.get_portal_url()">
+                            <t t-esc="order.name"/>
+                       </a>
+                    </td>
+                    <td class="text-right">
+                        <span t-field="order.date_approve"/>
+                    </td>
+                    <td>
+                        <t t-if="order.invoice_status == 'to invoice'">
+                            <span class="badge badge-info"><i class="fa fa-fw fa-file-text"/> Waiting for Bill</span>
+                        </t>
+                        <t t-if="order.state == 'cancel'">
+                            <span class="badge badge-secondary"><i class="fa fa-fw fa-remove"/> Cancelled</span>
+                        </t>
+                    </td>
+                    <td>
+                        <span t-field="order.release_date"/>
+                    </td>
+                    <td class="text-right">
+                        <span t-field="order.amount_total" t-options='{"widget": "monetary", "display_currency": order.currency_id}'/>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+    </template>
+    <!-- Modificacion vista purchase order list-->
+    <template id="portal_imjm_template_purchase_order_form" inherit_id="purchase.portal_my_purchase_order">
+        <xpath expr="//div[hasclass('card-body')]" position="after" id="div_subir_adjuntos">
+            <form action="/upload/archivos_factura/" method="post" enctype="multipart/form-data" id="file_upload_purchase_order_form">
+                <div id="purchase_order_subir_facturas" class="card-body">
+                    <input type="hidden" name="orden_id" t-att-value="order.id"/>
+                    <h4>    Adjuntar Factura .pdf</h4>
+                    <input type="file" name="adjunto_pdf" class="file" multiple="false" id="adjunto_pdf"
+                                       data-show-upload="true" data-show-caption="true" data-show-preview="true"/>
+                    <h4>    Adjuntar Factura .xml</h4>
+                    <input type="file" name="adjunto_xml" class="file" multiple="false" id="adjunto_xml"
+                                       data-show-upload="true" data-show-caption="true" data-show-preview="true"/>
+                    <br/>
+                    <br/>
+                    <span><button type="submit" class="btn btn-primary  ">Subir</button></span>
+                    <br/>
+                    <t t-if="upload_status_msg and 'Error' in upload_status_msg">
+                        <input type="text" readonly="1" name="upload_status_msg" t-attf-class="form-control #{upload_status_msg and 'is-invalid' or ''}" t-att-value="upload_status_msg or ' '"/>
+                    </t>
+                    <t t-if="upload_status_msg and upload_status_msg == 'Correcto'">
+                        <label class="col-form-label">Archivos subidos con éxito</label>
+                    </t>
+                </div>
+            </form>
         </xpath>
     </template>
 </odoo>
