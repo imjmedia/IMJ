@@ -86,9 +86,11 @@ class CustomerPortal(CustomerPortal):
             if order_sudo.invoice_status == 'invoiced':
                 values['upload_status_msg'] = 'Error de usuario! El pedido de compra ya cuenta con una factura activa previa.'
             else:
-                new_inv_dict = order_sudo.sudo(True).action_view_invoice()
-                if new_inv_dict:
-                    new_inv = request.env['account.move'].sudo(True).browse(new_inv_dict['res_id'])
+                #new_inv_dict = order_sudo.sudo(True).action_create_invoice()
+                new_inv = request.env['account.move'].action_create_invoice_from_po
+                #if new_inv_dict:
+                if new_inv:
+                    #new_inv = request.env['account.move'].sudo(True).browse(new_inv_dict['res_id'])
                     new_inv.l10n_mx_edi_cfdi_uuid = validacion[1]
                     new_inv.date = validacion[2]
                     new_inv.invoice_date = validacion[2]
