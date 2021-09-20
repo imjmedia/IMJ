@@ -145,7 +145,7 @@ class CustomerPortal(CustomerPortal):
         acc_move_obj = request.env['account.move']
         tfd_node = self.get_node(xml_tree, 'tfd:TimbreFiscalDigital[1]', {'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital'},)
         uuid_factura = tfd_node.attrib['UUID']
-        facturas_cargadas = acc_move_obj.search([('l10n_mx_supplier_cfdi_uuid', '=', uuid_factura), ('move_type', '=', 'in_invoice')])
+        facturas_cargadas = acc_move_obj.search([('l10n_mx_supplier_cfdi_uuid', '=', uuid_factura), ('type', '=', 'in_invoice')])
         if facturas_cargadas:
             for factura in facturas_cargadas:
                 return (True, 'El UUID %s ya fue cargado en la factura %s.' % (uuid_factura, factura.name))
