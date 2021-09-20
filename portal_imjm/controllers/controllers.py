@@ -81,9 +81,9 @@ class CustomerPortal(CustomerPortal):
             errores += 'Error de usuario! Ambos archivos son requeridos al adjuntar.'
         #parte final
         if not errores:
-            if order_sudo.invoice_status == 'no':
-                values['upload_status_msg'] = 'Error de usuario! El pedido de compra aún no está listo para ser facturado.'
-            elif order_sudo.invoice_status == 'invoiced':
+            #if order_sudo.invoice_status == 'no':
+            #    values['upload_status_msg'] = 'Error de usuario! El pedido de compra aún no está listo para ser facturado.'
+            if order_sudo.invoice_status == 'invoiced':
                 values['upload_status_msg'] = 'Error de usuario! El pedido de compra ya cuenta con una factura activa previa.'
             else:
                 new_inv_dict = order_sudo.sudo(True).action_create_invoice()
