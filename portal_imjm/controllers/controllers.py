@@ -153,6 +153,8 @@ class CustomerPortal(CustomerPortal):
 
     def validar_partner_con_sat(self, partner):
         fecha_validez = partner.valid_until
+        if not fecha_validez:
+            return 'Por favor cargue el documento de la Opinion del SAT en el menú "Mi cuenta" antes de intentar subir facturas.'
         fecha_hoy = fields.date.today()
         if (fecha_validez - fecha_hoy).days < 1:
             return 'La opinión del SAT del proveedor ha expirado: tiene más de 90 días.'
@@ -162,7 +164,7 @@ class CustomerPortal(CustomerPortal):
         pagos_obj = request.env['account.payment']
         fecha_limite = fields.Date.today() - relativedelta(days=30)
         pagos_sin_rep = pagos_obj.search(
-            [('date', '<', fecha_limite.strftime(DF)), ('partner_id', '=', partner.id),
+            [('payment_date', '<', fecha_limite.strftime(DF)), ('partner_id', '=', partner.id),
              ('state', '=', 'posted'), ('partner_type', '=', 'supplier')])
         for pago in pagos_sin_rep:
             return 'El proveedor tiene complementos de pago sin subir con mas de 30 días de emisión. (%s)'%pago.ref
