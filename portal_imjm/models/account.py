@@ -19,4 +19,5 @@ class AccountMove(models.Model):
             'type': 'in_invoice',
         })
         factura.purchase_order_change()
+        print(factura)
         return factura
