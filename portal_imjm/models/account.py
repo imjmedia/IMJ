@@ -17,7 +17,7 @@ class AccountMove(models.Model):
             'purchase_id': order_rec.id,
             'type': 'in_invoice',
             'date': fields.Date.today(),
-            'origin': order_rec.name,
+            'invoice_origin': order_rec.name,
         })
         po_lines = order_rec.order_line - factura.line_ids.mapped('purchase_line_id')
         new_lines = self.env['account.move.line']
