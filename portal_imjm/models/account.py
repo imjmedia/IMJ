@@ -44,7 +44,7 @@ class AccountMove(models.Model):
                 'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
                 'tax_ids': [(6, 0, line.taxes_id.ids)],
                 'display_type': line.display_type,
-                'account_id': accounts['expense'],
+                'account_id': accounts['expense'].id,
             })
             new_line._onchange_price_subtotal()
         return factura
