@@ -23,7 +23,26 @@ class AccountMove(models.Model):
         po_lines = order_rec.order_line - factura.line_ids.mapped('purchase_line_id')
         new_lines = self.env['account.move.line']
         for line in po_lines.filtered(lambda l: not l.display_type):
-            new_line = new_lines.create(line._prepare_account_move_line(self))
+            if line.product_id.purchase_method == 'purchase':
+                qty = line.product_qty - line.qty_invoiced
+            else:
+                qty = line.qty_received - line.qty_invoiced
+            new_line = new_lines.create({
+                'name': '%s: %s' % (order_rec.name, line.name),
+                'move_id': factura.id,
+                'currency_id': factura.currency_id.id,
+                'purchase_line_id': line.id,
+                'date_maturity': factura.invoice_date_due,
+                'product_uom_id': line.product_uom.id,
+                'product_id': line.product_id.id,
+                'price_unit': line.price_unit,
+                'quantity': qty,
+                'partner_id': factura.commercial_partner_id.id,
+                'analytic_account_id': line.account_analytic_id.id,
+                'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
+                'tax_ids': [(6, 0, line.taxes_id.ids)],
+                'display_type': line.display_type,
+            })
             new_line.account_id = new_line._get_computed_account()
             new_line._onchange_price_subtotal()
         return factura
