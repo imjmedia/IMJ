@@ -18,5 +18,5 @@ class AccountMove(models.Model):
             #'account_id': self.partner_id.property_account_payable_id.id,
             'type': 'in_invoice',
         })
-        factura.purchase_order_change()
+        factura._onchange_purchase_auto_complete()
         return factura
