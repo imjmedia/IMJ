@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models, _
 from itertools import groupby
-from odoo.Exceptions import UserError
+from odoo.exceptions import UserError,
 
 class AccountMove(models.Model):
     _inherit = "account.move"
