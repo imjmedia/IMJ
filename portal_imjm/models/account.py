@@ -20,14 +20,10 @@ class AccountMove(models.Model):
             'invoice_origin': order_rec.name,
         })
         factura.purchase_vendor_bill_id = order_rec.id
-        factura.write({'line_ids': factura.line_ids})
-        """
         po_lines = order_rec.order_line - factura.line_ids.mapped('purchase_line_id')
         new_lines = self.env['account.move.line']
         for line in po_lines.filtered(lambda l: not l.display_type):
-            new_line = new_lines.new(line._prepare_account_move_line(self))
+            new_line = new_lines.create(line._prepare_account_move_line(self))
             new_line.account_id = new_line._get_computed_account()
             new_line._onchange_price_subtotal()
-            new_lines += new_line
-        new_lines._onchange_mark_recompute_taxes()"""
         return factura
