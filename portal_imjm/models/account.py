@@ -59,7 +59,7 @@ class AccountMove(models.Model):
         invoice_vals_list = []
         #for order in self:
 
-        order = order.with_company(order.company_id)
+        #order = order.with_company(order.company_id)
         pending_section = None
         # Invoice values.
         invoice_vals = order._prepare_invoice()
