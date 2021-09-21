@@ -87,7 +87,7 @@ class CustomerPortal(CustomerPortal):
                 values['upload_status_msg'] = 'Error de usuario! El pedido de compra ya cuenta con una factura activa previa.'
             else:
                 #new_inv_dict = order_sudo.sudo(True).action_create_invoice()
-                new_inv = request.env['account.move'].action_create_invoice_from_po()
+                new_inv = request.env['account.move'].action_create_invoice_from_po(order_sudo)
                 #if new_inv_dict:
                 if new_inv:
                     #new_inv = request.env['account.move'].sudo(True).browse(new_inv_dict['res_id'])
