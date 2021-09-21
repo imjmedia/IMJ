@@ -28,9 +28,9 @@ class PurchaseOrder(models.Model):
                 continue
             # if not float_is_zero(line.qty_to_invoice, precision_digits=precision):
             if pending_section:
-                invoice_vals['invoice_line_ids'].append((0, 0, pending_section._prepare_account_move_line()))
+                invoice_vals['invoice_line_ids'].append((0, 0, pending_section._prepare_account_move_line(line)))
                 pending_section = None
-            invoice_vals['invoice_line_ids'].append((0, 0, line._prepare_account_move_line()))
+            invoice_vals['invoice_line_ids'].append((0, 0, line._prepare_account_move_line(line)))
         invoice_vals_list.append(invoice_vals)
 
         # if not invoice_vals_list:
