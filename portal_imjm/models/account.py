@@ -27,6 +27,8 @@ class AccountMove(models.Model):
                 qty = line.product_qty - line.qty_invoiced
             else:
                 qty = line.qty_received - line.qty_invoiced
+            fiscal_position = factura.fiscal_position_id
+            accounts = line.product_id.product_tmpl_id.get_product_accounts(fiscal_pos=fiscal_position)
             new_line = new_lines.create({
                 'name': '%s: %s' % (order_rec.name, line.name),
                 'move_id': factura.id,
@@ -42,7 +44,7 @@ class AccountMove(models.Model):
                 'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
                 'tax_ids': [(6, 0, line.taxes_id.ids)],
                 'display_type': line.display_type,
+                'account_id': accounts['expense'],
             })
-            new_line.account_id = new_line._get_computed_account()
             new_line._onchange_price_subtotal()
         return factura
