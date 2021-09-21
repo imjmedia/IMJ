@@ -101,6 +101,8 @@ class PurchaseOrder(models.Model):
         }
         return invoice_vals
 
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
 
     def _prepare_account_move_line_v14(self, move=False):
         self.ensure_one()
