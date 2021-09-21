@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models, _
 from itertools import groupby
+from odoo.Exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -62,7 +63,7 @@ class AccountMove(models.Model):
         #order = order.with_company(order.company_id)
         pending_section = None
         # Invoice values.
-        invoice_vals = order._prepare_invoice()
+        invoice_vals = order._prepare_invoice_v14()
         # Invoice line values (keep only necessary sections).
         for line in order.order_line:
             if line.display_type == 'line_section':
@@ -111,5 +112,31 @@ class AccountMove(models.Model):
         # We do this after the moves have been created since we need taxes, etc. to know if the total
         # is actually negative or not
         moves.filtered(lambda m: m.currency_id.round(m.amount_total) < 0).action_switch_invoice_into_refund_credit_note()
-
         return moves
+
+    def _prepare_invoice_v14(self):
+        """Prepare the dict of values to create the new invoice for a purchase order.
+        """
+        self.ensure_one()
+        move_type = self._context.get('default_move_type', 'in_invoice')
+        journal = self.env['account.move'].with_context(default_move_type=move_type)._get_default_journal()
+        if not journal:
+            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (self.company_id.name, self.company_id.id))
+
+        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
+        invoice_vals = {
+            'ref': self.partner_ref or '',
+            'move_type': move_type,
+            'narration': self.notes,
+            'currency_id': self.currency_id.id,
+            'invoice_user_id': self.user_id and self.user_id.id,
+            'partner_id': partner_invoice_id,
+            'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
+            'payment_reference': self.partner_ref or '',
+            'partner_bank_id': self.partner_id.bank_ids[:1].id,
+            'invoice_origin': self.name,
+            'invoice_payment_term_id': self.payment_term_id.id,
+            'invoice_line_ids': [],
+            'company_id': self.company_id.id,
+        }
+        return invoice_vals
