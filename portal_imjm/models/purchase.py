@@ -50,7 +50,7 @@ class PurchaseOrder(models.Model):
                 else:
                     ref_invoice_vals['invoice_line_ids'] += invoice_vals['invoice_line_ids']
                 origins.add(invoice_vals['invoice_origin'])
-                payment_refs.add(invoice_vals['payment_reference'])
+                payment_refs.add(invoice_vals['invoice_payment_ref'])
                 refs.add(invoice_vals['ref'])
             ref_invoice_vals.update({
                 'ref': ', '.join(refs)[:2000],
