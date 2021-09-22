@@ -114,7 +114,7 @@ class PurchaseOrderLine(models.Model):
             'name': '%s: %s' % (self.order_id.name, self.name),
             'product_id': self.product_id.id,
             'product_uom_id': self.product_uom.id,
-            'quantity': self.qty_to_invoice,
+            'quantity': self.product_qty, #AttributeError: 'purchase.order.line' object has no attribute 'qty_to_invoice'
             'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date),
             'tax_ids': [(6, 0, self.taxes_id.ids)],
             'analytic_account_id': self.account_analytic_id.id,
