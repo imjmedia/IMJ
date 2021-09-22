@@ -93,7 +93,7 @@ class PurchaseOrder(models.Model):
             'partner_id': partner_invoice_id,
             'fiscal_position_id': self.fiscal_position_id and self.fiscal_position_id.id or False,
             'invoice_payment_ref': self.partner_ref or '',
-            'partner_bank_id': self.partner_id.bank_ids[:1].id,
+            'invoice_partner_bank_id': self.partner_id.bank_ids and self.partner_id.bank_ids[:1].id or False,
             'invoice_origin': self.name,
             'invoice_payment_term_id': self.payment_term_id.id,
             'invoice_line_ids': [],
