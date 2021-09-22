@@ -11,13 +11,9 @@ class PurchaseOrder(models.Model):
     def action_create_invoice_po_v14(self ,order):
         """Create the invoice associated to the PO.
         """
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
 
         # 1) Prepare invoice vals and clean-up the section lines
         invoice_vals_list = []
-        # for order in self:
-
-        # order = order.with_company(order.company_id)
         pending_section = None
         # Invoice values.
         invoice_vals = order._prepare_invoice_v14()
@@ -26,15 +22,11 @@ class PurchaseOrder(models.Model):
             if line.display_type == 'line_section':
                 pending_section = line
                 continue
-            # if not float_is_zero(line.qty_to_invoice, precision_digits=precision):
             if pending_section:
                 invoice_vals['invoice_line_ids'].append((0, 0, pending_section._prepare_account_move_line_v14()))
                 pending_section = None
             invoice_vals['invoice_line_ids'].append((0, 0, line._prepare_account_move_line_v14()))
         invoice_vals_list.append(invoice_vals)
-
-        # if not invoice_vals_list:
-        #    raise UserError(_('There is no invoiceable line. If a product has a control policy based on received quantity, please make sure that a quantity has been received.'))
 
         # 2) group by (company_id, partner_id, currency_id) for batch creation
         new_invoice_vals_list = []
@@ -114,7 +106,7 @@ class PurchaseOrderLine(models.Model):
             'name': '%s: %s' % (self.order_id.name, self.name),
             'product_id': self.product_id.id,
             'product_uom_id': self.product_uom.id,
-            'quantity': self.product_qty, #AttributeError: 'purchase.order.line' object has no attribute 'qty_to_invoice'
+            'quantity': self.product_qty,
             'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date),
             'tax_ids': [(6, 0, self.taxes_id.ids)],
             'analytic_account_id': self.account_analytic_id.id,
