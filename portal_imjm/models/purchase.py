@@ -86,7 +86,7 @@ class PurchaseOrder(models.Model):
         partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
         invoice_vals = {
             'ref': self.partner_ref or '',
-            'move_type': move_type,
+            'type': move_type,
             'narration': self.notes,
             'currency_id': self.currency_id.id,
             'invoice_user_id': self.user_id and self.user_id.id,
