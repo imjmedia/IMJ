@@ -64,7 +64,7 @@ class PurchaseOrder(models.Model):
         moves = self.env['account.move']
         AccountMove = self.env['account.move'].with_context(default_move_type='in_invoice')
         for vals in invoice_vals_list:
-            moves |= AccountMove.with_company(vals['company_id']).create(vals)
+            moves |= AccountMove.create(vals)
 
         # 4) Some moves might actually be refunds: convert them if the total amount is negative
         # We do this after the moves have been created since we need taxes, etc. to know if the total
