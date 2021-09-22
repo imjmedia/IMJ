@@ -55,7 +55,7 @@ class PurchaseOrder(models.Model):
             ref_invoice_vals.update({
                 'ref': ', '.join(refs)[:2000],
                 'invoice_origin': ', '.join(origins),
-                'payment_reference': len(payment_refs) == 1 and payment_refs.pop() or False,
+                'invoice_payment_ref': len(payment_refs) == 1 and payment_refs.pop() or False,
             })
             new_invoice_vals_list.append(ref_invoice_vals)
         invoice_vals_list = new_invoice_vals_list
