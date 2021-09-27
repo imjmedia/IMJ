@@ -10,5 +10,6 @@
     'summary': 'This module creates a new date field on purchase order line.',
     'data': [
         'views/purchase_order_view.xml',
+        'views/purchase_order_report_templates.xml',
     ],
 }

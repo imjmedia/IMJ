@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="inherit_month_campaign_report_purchaseorder_document"
+		inherit_id="purchase.report_purchaseorder_document">
+		<xpath expr="//field[@id='product']" position="replace">
+			<td id="product2">
+                <span t-field="line.name"/>
+            </td>
+		</xpath>
+		<xpath expr="//table[hasclass('o_main_table')]/tbody/t/tr/td[hasclass('text-center')]" position="replace">
+			<span t-field="line.mes_campana"/>
+		</xpath>
+	</template>
+</odoo>
