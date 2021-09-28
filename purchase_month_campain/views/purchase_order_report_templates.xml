@@ -2,12 +2,12 @@
 <odoo>
 	<template id="inherit_month_campaign_report_purchaseorder_document"
 		inherit_id="purchase.report_purchaseorder_document">
-		<xpath expr="//field[@id='product']" position="replace">
+		<xpath expr="//td[@id='product']" position="replace">
 			<td id="product2">
                 <span t-field="line.name"/>
             </td>
 		</xpath>
-		<xpath expr="//table[hasclass('o_main_table')]/tbody/t/tr/td[hasclass('text-center')]" position="replace">
+		<xpath expr="//t/div/table/tbody/t/tr/t/td[3]" position="replace">
 			<span t-field="line.mes_campana"/>
 		</xpath>
 	</template>
