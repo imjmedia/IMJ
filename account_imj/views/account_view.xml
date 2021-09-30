@@ -13,9 +13,6 @@
 				<xpath expr="//field[@name='inalterable_hash']" position="after">
                     <field name="no_publicable" invisible="1"/>
                 </xpath>
-                <xpath expr="//field[@name='invoice_user_id']" position="replace">
-                    <field name="invoice_user_id" domain="[('es_vendedor', '=', True)]"/>
-                </xpath>
             </field>
         </record>
 
