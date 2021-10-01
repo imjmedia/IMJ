@@ -13,13 +13,8 @@
 				<xpath expr="//field[@name='inalterable_hash']" position="after">
                     <field name="no_publicable" invisible="1"/>
                 </xpath>
-                <xpath expr="//field[@name='invoice_user_id']" position="replace">
-                    <field name="invoice_user_id" domain="[('es_vendedor', '=', True)]"/>
-                </xpath>
             </field>
         </record>
-
-
         
         <record id="account_journal_nopublicable_view" model="ir.ui.view">
             <field name="name">account.journal.nopublicable.view</field>
@@ -31,7 +26,5 @@
                 </xpath>
             </field>
         </record>
-
-        
 	</data>
 </odoo>
