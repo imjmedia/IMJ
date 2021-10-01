@@ -32,7 +32,7 @@ class AccountPayment(models.Model):
         for move in self:
             if move.payment_type == 'outbound':
                 move.l10n_mx_edi_cfdi_uuid = move.aux_mx_edi_cfdi_uuid
-            else:
+            else:#manda error por falta del método aqui mismo
                 cfdi_infos = move._l10n_mx_edi_decode_cfdi()
 
                 move.l10n_mx_edi_cfdi_uuid = cfdi_infos.get('uuid')
