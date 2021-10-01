@@ -8,6 +8,7 @@ class AccountMove(models.Model):
 
     l10n_mx_edi_payment_policy = fields.Selection(selection=[('PPD', 'PPD'), ('PUE', 'PUE')], string='Método de Pago',
                                           default='PPD', store=True)
+    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False)
 
     def _l10n_mx_edi_get_payment_policy(self):
         self.ensure_one()
@@ -22,20 +23,20 @@ class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
     notas = fields.Char(string="Notas")
-    aux_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False)
-    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, compute='_compute_cfdi_uuid')
+    #aux_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False)
+    #l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, compute='_compute_cfdi_uuid')
 
-    @api.depends('aux_mx_edi_cfdi_uuid')
-    def _compute_cfdi_uuid(self):
-        '''Fill the invoice fields from the cfdi values.
-        '''
-        for move in self:
-            if move.payment_type == 'outbound':
-                move.l10n_mx_edi_cfdi_uuid = move.aux_mx_edi_cfdi_uuid
-            else:#manda error por falta del método aqui mismo
-                cfdi_infos = move._l10n_mx_edi_decode_cfdi()
-
-                move.l10n_mx_edi_cfdi_uuid = cfdi_infos.get('uuid')
-                move.l10n_mx_edi_cfdi_supplier_rfc = cfdi_infos.get('supplier_rfc')
-                move.l10n_mx_edi_cfdi_customer_rfc = cfdi_infos.get('customer_rfc')
-                move.l10n_mx_edi_cfdi_amount = cfdi_infos.get('amount_total')
+    #@api.depends('aux_mx_edi_cfdi_uuid')
+    #def _compute_cfdi_uuid(self):
+    #    '''Fill the invoice fields from the cfdi values.
+    #    '''
+    #    for move in self:
+    #        if move.payment_type == 'outbound':
+    #            move.l10n_mx_edi_cfdi_uuid = move.aux_mx_edi_cfdi_uuid
+    #        else:#manda error por falta del método aqui mismo
+    #            cfdi_infos = move._l10n_mx_edi_decode_cfdi()
+    #
+    #            move.l10n_mx_edi_cfdi_uuid = cfdi_infos.get('uuid')
+    #            move.l10n_mx_edi_cfdi_supplier_rfc = cfdi_infos.get('supplier_rfc')
+    #            move.l10n_mx_edi_cfdi_customer_rfc = cfdi_infos.get('customer_rfc')
+    #            move.l10n_mx_edi_cfdi_amount = cfdi_infos.get('amount_total')
