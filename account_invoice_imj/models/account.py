@@ -7,8 +7,8 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     l10n_mx_edi_payment_policy = fields.Selection(selection=[('PPD', 'PPD'), ('PUE', 'PUE')], string='Método de Pago',
-                                          default='PPD', store=True)
-    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False)
+                                          default='PPD', store=True, required=True)
+    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, required=True)
 
     def _l10n_mx_edi_get_payment_policy(self):
         self.ensure_one()
