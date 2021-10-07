@@ -8,7 +8,9 @@ class AccountMove(models.Model):
 
     l10n_mx_edi_payment_policy = fields.Selection(selection=[('PPD', 'PPD'), ('PUE', 'PUE')], string='Método de Pago',
                                           default='PPD', store=True, required=True)
-    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False)
+    l10n_mx_edi_cfdi_uuid = fields.Char(string='Fiscal Folio', copy=False, readonly=False,
+                                        help='Folio in electronic invoice, is returned by SAT when send to stamp.',
+                                        compute=False)
 
     def _l10n_mx_edi_get_payment_policy(self):
         self.ensure_one()
